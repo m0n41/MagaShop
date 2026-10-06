@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="form-page">
+        <div class="form-card">
+            <h2>Авторизация</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <p><a href="{% url "users:password_reset" %}">Восстановить пароль</a></p>
+                <button type="submit">Войти</button>
+            </form>
+            <hr>
+            <form method="post" action="{% url "social:begin" "github" %}" class="form-card__social">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
+                <button type="submit" class="form-card__social-button">
+                    <img src="{% static "social-auth/github.png" %}" alt="Войти через GitHub">
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

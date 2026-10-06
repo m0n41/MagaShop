@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="recent-views">
+        <h2>Каталог просмотров</h2>
+        {% for item in recent_views %}
+            <div class="recent-view-item">
+                <h3>{{ item.name }}</h3>
+                <p>Цена: {{ item.price }}</p>
+                <a href="{% url 'catalog:product_detail' item.slug %}">Перейти к товару</a>
+            </div>
+        {% empty %}
+            <p>Вы еще не просматривали товары.</p>
+        {% endfor %}
+        {% if recent_views %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit">Очистить историю просмотров</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock content %}

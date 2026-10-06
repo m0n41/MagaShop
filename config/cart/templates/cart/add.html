@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="form-page">
+        <div class="form-card">
+            <h1>Добавление товара в корзину</h1>
+            {% if form.errors %}
+                <p class="form-card__error">Ваши данные не верны</p>
+            {% endif %}
+            <form action="." method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <p><input type="submit" value="Добавить в корзину"></p>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

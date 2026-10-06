@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="page-container">
+        <h2 class="page-title">Результаты поиска по запросу: «{{ query }}»</h2>
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    {% include "includes/_wishlist_button.html" with product=product %}
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-card__img">
+                        <p class="product-card__title">{{ product.name }}</p>
+                    </a>
+                </div>
+            {% empty %}
+                <p>Ничего не найдено</p>
+            {% endfor %}
+        </div>
+        {% include "includes/_pagination.html" %}
+    </div>
+{% endblock content %}

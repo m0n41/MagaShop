@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="form-page">
+        <div class="form-card">
+            <h2>Подтверждение e-mail</h2>
+            <p class="form-card__hint">Отлично! Мы отправили код на вашу почту — введите его ниже.</p>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Проверить код</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

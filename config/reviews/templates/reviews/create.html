@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="form-page">
+        <div class="form-card">
+            <h2>Оставьте свой отзыв на товар <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>:</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

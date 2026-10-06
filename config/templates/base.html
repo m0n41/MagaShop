@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MagaShop{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-header__inner">
+            <div class="site-header__logo">
+                <a href="{% url "catalog:product_list" %}">
+                    <img src="{% static 'images/logo.png' %}" alt="MagaShop">
+                </a>
+            </div>
+            <div class="site-header__nav">
+                <nav class="main-nav">
+                    {% for key, value in main_menu.items %}
+                        <ul><a href="{{ value }}">{{ key }}</a></ul>
+                        {% if forloop.last %}
+                            <div class="search-form">
+                                <form method="get" action="{% url "catalog:search" %}">
+                                    <input type="text" name="q" value="{{ query }}">
+                                    <button type="submit">Найти</button>
+                                </form>
+                            </div>
+                            <a href="{% url "cart:detail" %}" class="cart-link">
+                                Корзина: {{ cart|length }} · {{ cart.get_total_price }} ₽
+                            </a>
+                            {% if user.is_authenticated %}
+                                <a href="{% url "orders:list" %}" class="orders-link">
+                                    Заказы
+                                </a>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                                <a href="{% url "wishlist:list" %}" class="wishlist-link">
+                                    Избранное
+                                </a>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                                <a href="{% url "users:become_salary" %}" class="wishlist-link">
+                                    Стать продавцом
+                                </a>
+                            {% else %}
+                                <a href="{% url "users:login" %}" class="wishlist-link">
+                                    Стать продавцом
+                                </a>
+                            {% endif %}
+                            <a href="{% url "users:views_list" %}">Просмотры</a>
+                            <ul class="auth-menu">
+                                {% if user.is_authenticated %}
+                                    <li class="auth-username"><a href="{% url "users:profile" %}">{{ user.username }}</a></li>
+                                    <li>
+                                        <form method="post" action="{% url "users:logout" %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="next" value="{{ request.path }}">
+                                            <button type="submit">Выйти</button>
+                                        </form>
+                                    </li>
+                                {% else %}
+                                    <li><a href="{% url "users:login" %}">Войти</a></li>
+                                    <li><a href="{% url "users:register" %}">Регистрация</a></li>
+                                {% endif %}
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    {% load catalog_tags %}
+    <div class="categories-bar">
+        {% categories_menu %}
+    </div>
+
+    <main>
+        <div class="sidebar">
+            {% block sidebar %}{% endblock sidebar %}
+        </div>
+        <div class="content">
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+            {% block content %}{% endblock content %}
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="site-footer__inner">
+            <div class="site-footer__links">
+                <a href="{% url 'pages:about' %}">О нас</a>
+                <a href="{% url 'pages:delivery' %}">Доставка и оплата</a>
+                <a href="{% url 'pages:contacts' %}">Контакты</a>
+            </div>
+            <p class="site-footer__copy">&copy; {% now "Y" %} MagaShop</p>
+        </div>
+        {% block footer %}{% endblock footer %}
+    </footer>
+    {% block extra_js %}{% endblock extra_js %}
+</body>
+</html>

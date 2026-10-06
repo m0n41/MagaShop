@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }}{% endblock %}
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="product-detail">
+        <h1 class="product-detail__title">{{ product.name }}</h1>
+
+        <div class="product-detail__main">
+            <div class="product-detail__gallery">
+                {% include "includes/_wishlist_button.html" with product=product %}
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-detail__main-img">
+                {% endif %}
+                {% if product.images.all %}
+                    <div class="product-detail__thumbs">
+                        {% for img in product.images.all %}
+                            <img src="{{ img.image.url }}" alt="{{ img.alt_text|default:product.name }}">
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="product-detail__info">
+                <p>{{ product.category }}</p>
+                <p>{{ product.description }}</p>
+                <p>Бренд: {{ product.brand }}</p>
+                <p>На складе: {{ product.stock }} шт.</p>
+                {% if product.is_available %}
+                    <p class="product-detail__available">Есть в наличии</p>
+                {% endif %}
+                <p class="product-detail__meta">Рейтинг: {{ average_rating|default:"—" }} · Отзывов: {{ reviews_count }}</p>
+            </div>
+
+            <div class="product-detail__purchase">
+                <p class="product-detail__price">{{ product.price }} ₽</p>
+                {% if product.discount_percent > 0 %}
+                    <p class="product-detail__old-price">{{ product.old_price }} ₽</p>
+                    <p class="product-detail__discount">Скидка {{ product.discount_percent }}%</p>
+                {% endif %}
+
+                <form method="post" action="{% url 'cart:add' product.id %}" class="add-to-cart-form">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="1" min="1">
+                    <button type="submit" class="btn-primary">Добавить в корзину</button>
+                </form>
+
+                <a href="{% url 'cart:buy_now' product.id %}?quantity=1" class="btn-secondary">Купить сейчас</a>
+            </div>
+        </div>
+
+        <div class="product-detail__bottom">
+            <div class="product-detail__related">
+                <h3 class="section-title">Похожие товары</h3>
+                {% if related_products %}
+                    <div class="related-grid">
+                        {% for related_product in related_products %}
+                            <div class="related-card">
+                                {% include "includes/_wishlist_button.html" with product=related_product %}
+                                <a href="{{ related_product.get_absolute_url }}" class="related-card__link">
+                                    {% if related_product.image %}
+                                        <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}" class="related-card__img">
+                                    {% endif %}
+                                    <p class="related-card__title">{{ related_product.name }}</p>
+                                    <p class="related-card__price">{{ related_product.price }} ₽</p>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a href="{% url 'catalog:similar_products' product.slug %}" class="btn-similar">Смотреть все похожие товары →</a>
+                {% else %}
+                    <p>Похожих товаров пока нет</p>
+                {% endif %}
+            </div>
+            <div class="product-detail__reviews">
+                <p>Отзывы: </p>
+                {% for review in reviews %}
+                    <div class="review-item">
+                        <p>Пользователь: {{ review.user }}</p>
+                        <p>Оценка: {{ review.rating }}</p>
+                        <p>Комментарий: {{ review.text }}</p>
+                    </div>
+                {% empty %}
+                    <p>Отзывов нет</p>
+                {% endfor %}
+                <a href="{% url 'reviews:create' slug=product.slug %}">Оставить отзыв</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="page-container">
+        <h2 class="page-title">Редактирование профиля</h2>
+        <div class="profile-edit">
+            <div class="form-card">
+                <form method="post" action="{% url "users:profile_edit" %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ user_form.as_p }}
+                    <button type="submit">Сохранить</button>
+                </form>
+            </div>
+            <div class="form-card">
+                <form method="post" action="{% url "users:profile_edit_address" %}">
+                    {% csrf_token %}
+                    {{ address_form.as_p }}
+                    <button type="submit">Сохранить</button>
+                </form>
+            </div>
+            <div class="profile-edit__links">
+                <p><a href="{% url "orders:list" %}">История заказов</a></p>
+                {% if user.has_usable_password %}
+                    <a href="{% url 'users:password_change' %}">Сменить пароль</a>
+                {% else %}
+                    <p>Вы вошли через GitHub — пароля на сайте у вас нет.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

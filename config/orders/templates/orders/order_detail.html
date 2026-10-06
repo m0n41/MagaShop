@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="page-container">
+        <div class="order-detail">
+            <h2 class="page-title">Заказ №{{ order.pk }}</h2>
+            <p>Статус: {{ order.status }}</p>
+            <p>Дата: {{ order.created_at }}</p>
+            <div class="order-detail__items">
+                {% for item in order.items.all %}
+                    <p>{{ item.product.name }}: {{ item.quantity }} шт. — {{ item.get_cost }}</p>
+                {% endfor %}
+            </div>
+            <p class="order-detail__total">Итого: {{ order.get_total_cost }}</p>
+        </div>
+    </div>
+{% endblock content %}

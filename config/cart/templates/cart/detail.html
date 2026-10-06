@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="page-container">
+        <h2 class="page-title">Корзина</h2>
+        <div class="cart-list">
+            {% for item in cart %}
+                {% with product=item.product %}
+                    <div class="cart-item">
+                        <div class="cart-item__img">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        </div>
+                        <div class="cart-item__info">
+                            <h3>{{ product.name }}</h3>
+                            <p>{{ product.description|truncatewords:10 }}</p>
+                            <p>Цена: {{ item.price }}</p>
+                            <p>Количество: {{ item.quantity }}</p>
+                            <p>Итого: {{ item.total_price }}</p>
+                            <form method="post" action="{% url 'cart:remove' product.id %}" class="cart-item__remove-form">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="1" min="1" max="{{ item.quantity }}">
+                                <button type="submit" name="action" value="partial">Удалить</button>
+                                <button type="submit" name="action" value="all">Удалить всё</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endwith %}
+            {% empty %}
+                <p>Корзина пуста</p>
+            {% endfor %}
+            <p class="cart-list__total">Итоговая сумма: {{ cart.get_total_price }}</p>
+            <form method="post" action="{% url "cart:apply_coupon" %}" class="cart-list__coupon-form">
+                {% csrf_token %}
+                <input type="text" name="coupon_id" placeholder="Введите код купона">
+                <button type="submit">Применить купон</button>
+            </form>
+            {% if cart.coupon %}
+                <p>Применён купон: {{ cart.coupon.code }} (Скидка: {{ cart.coupon.discount }})</p>
+            {% endif %}
+            {% if cart|length > 0 %}
+                <div class="cart-list__actions">
+                    <a href="{% url 'cart:clear' %}" class="btn-secondary btn-clear">Очистить корзину</a>
+                    <a href="{% url 'orders:buy' %}" class="btn-primary btn-checkout">Купить</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="static-page">
+        <div class="page-hero reveal">
+            <img class="page-hero__bg" src="{% static 'images/about/hero.jpg' %}" alt="">
+            <div class="page-hero__overlay">
+                <h1>О нас</h1>
+                <p>Простые покупки, честные цены, забота о каждом заказе</p>
+            </div>
+        </div>
+        <div class="page-text reveal">
+            <p>
+                MagaShop — интернет-магазин, где мы стараемся сделать выбор и покупку товаров простыми и приятными.
+                Мы работаем над тем, чтобы у вас всегда был доступ к качественным товарам по честным ценам,
+                с понятным описанием и без лишних сложностей на пути от выбора товара до его получения.
+            </p>
+        </div>
+        <div class="value-grid">
+            <div class="value-card reveal">
+                <img src="{% static 'images/about/value-quality.png' %}" alt="" class="value-card__icon">
+                <h3>Качество</h3>
+                <p>Каждый заказ проверяется вручную перед отправкой — вы получаете именно то, что видели на сайте.</p>
+            </div>
+            <div class="value-card reveal">
+                <img src="{% static 'images/about/value-price.png' %}" alt="" class="value-card__icon">
+                <h3>Честные цены</h3>
+                <p>Никаких скрытых наценок — цена в карточке товара это то, что вы заплатите на кассе.</p>
+            </div>
+            <div class="value-card reveal">
+                <img src="{% static 'images/about/value-support.png' %}" alt="" class="value-card__icon">
+                <h3>Поддержка</h3>
+                <p>Остались вопросы о заказе или доставке? Мы всегда на связи и рады помочь.</p>
+            </div>
+        </div>
+        <div class="page-story reveal">
+            <img src="{% static 'images/about/story.jpg' %}" alt="" class="page-story__img">
+            <div class="page-story__text">
+                <h2>Наша история</h2>
+                <p>
+                    Каждый заказ обрабатывается вручную, а не автоматически — мы проверяем наличие товара на складе
+                    и следим, чтобы то, что вы получаете, полностью соответствовало описанию на сайте.
+                </p>
+                <p>
+                    Если у вас остались вопросы о товарах, заказе или доставке — загляните на страницу
+                    <a href="{% url 'pages:contacts' %}">«Контакты»</a>, мы всегда рады помочь.
+                </p>
+            </div>
+        </div>
+        <div class="page-cta reveal">
+            <h2>Готовы выбрать что-то для себя?</h2>
+            <a href="{% url 'catalog:product_list' %}" class="page-cta__button">Перейти в каталог</a>
+        </div>
+    </div>
+{% endblock content %}

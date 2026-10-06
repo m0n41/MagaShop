@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load catalog_tags %}
+
+{% block title %}
+    Каталог товаров
+{% endblock %}
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="page-container">
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    {% include "includes/_wishlist_button.html" with product=product %}
+                    <a href="{{ product.get_absolute_url }}">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-card__img">
+                        {% endif %}
+                        <h2 class="product-card__title">{{ product.name }}</h2>
+                        <p class="product-card__price">{{ product.price }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+            {% if not products %}
+                <p>Товаров нет</p>
+            {% endif %}
+        </div>
+        {% include "includes/_pagination.html" %}
+    </div>
+{% endblock content %}

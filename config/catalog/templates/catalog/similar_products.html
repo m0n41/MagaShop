@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Похожие на «{{ product.name }}»{% endblock %}
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="page-container">
+        <h2 class="page-title">Похожие на «{{ product.name }}»</h2>
+        <div class="product-grid">
+            {% for related_product in products %}
+                <div class="product-card">
+                    {% include "includes/_wishlist_button.html" with product=related_product %}
+                    <a href="{{ related_product.get_absolute_url }}">
+                        {% if related_product.image %}
+                            <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}" class="product-card__img">
+                        {% endif %}
+                        <h2 class="product-card__title">{{ related_product.name }}</h2>
+                        <p class="product-card__price">{{ related_product.price }} ₽</p>
+                    </a>
+                </div>
+            {% empty %}
+                <p>Похожих товаров пока нет</p>
+            {% endfor %}
+        </div>
+        {% include "includes/_pagination.html" %}
+    </div>
+{% endblock content %}

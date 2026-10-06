@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="page-container">
+        <h2 class="page-title">Мои заказы</h2>
+        <div class="order-list">
+            {% for order in orders %}
+                <div class="order-item">
+                    <p>Заказ №{{ order.pk }}. <a href="{% url "orders:detail" order.pk %}">Детали</a></p>
+                    <p>Статус: {{ order.status }}</p>
+                    <p>Время: {{ order.created_at }}</p>
+                </div>
+            {% empty %}
+                <p>Нет заказов.</p>
+            {% endfor %}
+        </div>
+        {% include "includes/_pagination.html" %}
+    </div>
+{% endblock content %}

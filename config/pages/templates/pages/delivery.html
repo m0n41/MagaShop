@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="static-page">
+        <div class="page-hero reveal">
+            <img class="page-hero__bg" src="{% static 'images/delivery/hero.jpg' %}" alt="">
+            <div class="page-hero__overlay">
+                <h1>Доставка и оплата</h1>
+                <p>От заказа до посылки на пороге — всего четыре шага</p>
+            </div>
+        </div>
+        <div class="page-text reveal">
+            <p>
+                Мы отправляем заказы по всей стране и стараемся, чтобы путь от оформления заказа
+                до его получения занимал как можно меньше времени — без сюрпризов на каждом шаге.
+            </p>
+        </div>
+        <div class="steps">
+            <div class="step reveal">
+                <div class="step__number">1</div>
+                <h3>Оформляете заказ</h3>
+                <p>Собираете корзину и оформляете заказ на сайте — регистрация не обязательна.</p>
+            </div>
+            <div class="step reveal">
+                <div class="step__number">2</div>
+                <h3>Мы подтверждаем</h3>
+                <p>Проверяем наличие товара и присылаем письмо с подтверждением и номером заказа.</p>
+            </div>
+            <div class="step reveal">
+                <div class="step__number">3</div>
+                <h3>Собираем и отправляем</h3>
+                <p>Упаковываем заказ и передаём в службу доставки, выбранную вами при оформлении.</p>
+            </div>
+            <div class="step reveal">
+                <div class="step__number">4</div>
+                <h3>Вы получаете заказ</h3>
+                <p>Забираете посылку в пункте выдачи или встречаете курьера по указанному адресу.</p>
+            </div>
+        </div>
+        <div class="value-grid">
+            <div class="value-card reveal">
+                <img src="{% static 'images/delivery/courier.png' %}" alt="" class="value-card__icon">
+                <h3>Курьером</h3>
+                <p>Доставим заказ прямо по указанному адресу в удобное для вас время.</p>
+            </div>
+            <div class="value-card reveal">
+                <img src="{% static 'images/delivery/pickup.png' %}" alt="" class="value-card__icon">
+                <h3>Пункт выдачи</h3>
+                <p>Заберите заказ в ближайшем пункте выдачи в любое удобное время.</p>
+            </div>
+            <div class="value-card reveal">
+                <img src="{% static 'images/delivery/post.png' %}" alt="" class="value-card__icon">
+                <h3>Почтой</h3>
+                <p>Отправим заказ почтой в любой населённый пункт страны.</p>
+            </div>
+        </div>
+        <div class="page-story reveal">
+            <img src="{% static 'images/delivery/payment.jpg' %}" alt="" class="page-story__img">
+            <div class="page-story__text">
+                <h2>Способы оплаты</h2>
+                <p>Оплатить заказ можно картой онлайн при оформлении на сайте — быстро и без комиссии.</p>
+                <p>Также доступна оплата наличными или картой курьеру при получении заказа.</p>
+            </div>
+        </div>
+        <div class="page-cta reveal">
+            <h2>Остались вопросы по доставке?</h2>
+            <a href="{% url 'pages:contacts' %}" class="page-cta__button">Связаться с нами</a>
+        </div>
+    </div>
+{% endblock content %}

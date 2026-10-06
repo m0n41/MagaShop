@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+    <div class="filter-panel">
+        <h3 class="filter-panel__title">Фильтры</h3>
+        <form method="get" class="filter-panel__form">
+            {% if subcategories %}
+                <div class="filter-panel__group filter-panel__subcategories">
+                    <label>Подкатегория</label>
+                    <div class="filter-panel__radio-list">
+                        <label class="filter-panel__radio">
+                            <input type="radio" name="subcategory" value="" {% if not current_subcategory %}checked{% endif %}>
+                            Все
+                        </label>
+                        {% for sub in subcategories %}
+                            <label class="filter-panel__radio">
+                                <input type="radio" name="subcategory" value="{{ sub.slug }}" {% if sub.slug == current_subcategory %}checked{% endif %}>
+                                {{ sub.name }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="filter-panel__group">
+                <label>Цена, ₽</label>
+                <div class="filter-panel__price">
+                    <input type="number" name="price_min" placeholder="От" value="{{ current_price_min }}" min="0">
+                    <input type="number" name="price_max" placeholder="До" value="{{ current_price_max }}" min="0">
+                </div>
+            </div>
+            {% if brands %}
+                <div class="filter-panel__group">
+                    <label for="filter-brand">Бренд</label>
+                    <select name="brand" id="filter-brand">
+                        <option value="">Все бренды</option>
+                        {% for b in brands %}
+                            <option value="{{ b }}" {% if b == current_brand %}selected{% endif %}>{{ b }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+            <div class="filter-panel__group">
+                <label for="filter-sort">Сортировка</label>
+                <select name="sort" id="filter-sort">
+                    <option value="" {% if not current_sort %}selected{% endif %}>По умолчанию</option>
+                    <option value="price_asc" {% if current_sort == "price_asc" %}selected{% endif %}>Сначала дешевле</option>
+                    <option value="price_desc" {% if current_sort == "price_desc" %}selected{% endif %}>Сначала дороже</option>
+                    <option value="popular" {% if current_sort == "popular" %}selected{% endif %}>По популярности</option>
+                    <option value="new" {% if current_sort == "new" %}selected{% endif %}>Сначала новые</option>
+                </select>
+            </div>
+            <button type="submit" class="filter-panel__submit">Применить</button>
+            {% if current_price_min or current_price_max or current_brand or current_sort or current_subcategory %}
+                <a href="{{ category.get_absolute_url }}" class="filter-panel__reset">Сбросить фильтры</a>
+            {% endif %}
+        </form>
+    </div>
+{% endblock sidebar %}
+{% block content %}
+    <div class="page-container">
+        <h2 class="page-title">Категория: {{ category.name }}</h2>
+        <div class="product-grid">
+            {% for product in category_product %}
+                <div class="product-card">
+                    {% include "includes/_wishlist_button.html" with product=product %}
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-card__img">
+                        <p class="product-card__title">{{ product.name }}</p>
+                        <p class="product-card__price">{{ product.price }} ₽</p>
+                    </a>
+                </div>
+            {% empty %}
+                <p>Нет товаров</p>
+            {% endfor %}
+        </div>
+        {% include "includes/_pagination.html" %}
+    </div>
+{% endblock content %}

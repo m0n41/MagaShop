@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="form-page">
+        <div class="form-card form-card--success">
+            <h2>Вы стали продавцом</h2>
+            <p class="form-card__hint">Теперь вы можете размещать свои товары на MagaShop.</p>
+            <a href="{% url "users:profile" %}" class="btn-secondary">Вернуться в профиль</a>
+        </div>
+    </div>
+{% endblock content %}

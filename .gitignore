@@ -1,0 +1,7 @@
+djvenv/
+__pycache__/
+*.pyc
+.env
+config/media/
+db.sqlite3
+.vscode/

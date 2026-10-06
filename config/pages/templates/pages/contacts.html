@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="static-page">
+        <div class="page-hero reveal">
+            <img class="page-hero__bg" src="{% static 'images/contacts/hero.jpg' %}" alt="">
+            <div class="page-hero__overlay">
+                <h1>Контакты</h1>
+                <p>Свяжитесь с нами любым удобным способом</p>
+            </div>
+        </div>
+
+        <div class="value-grid">
+            <div class="value-card reveal">
+                <h3>Телефон</h3>
+                <p><a href="tel:+70000000000">+7 (000) 000-00-00</a></p>
+                <p>Ежедневно с 9:00 до 21:00</p>
+            </div>
+            <div class="value-card reveal">
+                <h3>Email</h3>
+                <p><a href="mailto:info@shopdjango.ru">info@shopdjango.ru</a></p>
+                <p>Отвечаем в течение рабочего дня</p>
+            </div>
+            <div class="value-card reveal">
+                <h3>Адрес</h3>
+                <p>г. Москва, ул. Примерная, д. 1</p>
+                <p>Пункт самовывоза</p>
+            </div>
+        </div>
+
+        <div class="page-cta reveal">
+            <h2>Не нашли ответ на свой вопрос?</h2>
+            <p>Напишите нам на почту — мы всегда рады помочь с выбором и вопросами по заказу.</p>
+            <a href="mailto:info@shopdjango.ru" class="page-cta__button">Написать нам</a>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Добавить товар{% endblock %}
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="form-page">
+        <div class="form-card">
+            <h2>Добавить товар</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Добавить товар</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

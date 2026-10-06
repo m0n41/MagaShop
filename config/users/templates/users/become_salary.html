@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="form-page">
+        <div class="form-card">
+            <h2>Стать продавцом</h2>
+            <p class="form-card__hint">Чтобы начать продавать на MagaShop, подтвердите свой e-mail — мы отправим на него код.</p>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Отправить код</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

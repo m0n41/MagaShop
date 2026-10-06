@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+    <div class="page-container">
+        <div class="profile-card">
+            <h2 class="page-title">Профиль</h2>
+            <div class="profile-card__avatar">
+                {% if user_obj.photo %}
+                    <img src="{{ user_obj.photo.url }}" alt="Аватарка">
+                {% else %}
+                    <img src="{% static 'profile/default.png' %}" alt="Аватарка">
+                {% endif %}
+            </div>
+            <div class="profile-card__info">
+                <p>{{ user_obj.username }}</p>
+                <p>{{ user_obj.email }}</p>
+                <p>{{ user_obj.first_name }}</p>
+                <p>{{ user_obj.last_name }}</p>
+                <p>Статус: {{ user_obj.get_status_user_display }}</p>
+                <p>{{ user_obj.profile.phone }}</p>
+                <p>{{ user_obj.profile.address }}</p>
+                <p>{{ user_obj.profile.city }}</p>
+                <a href="{% url 'users:profile_edit' %}">Редактировать профиль</a>
+                {% if user_obj.status_user == "Seller" %}
+                    <p><a href="{% url "catalog:product_add" %}">Добавить товар в каталог</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

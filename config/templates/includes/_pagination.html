@@ -1,0 +1,28 @@
+{% load catalog_tags %}
+<div class="pagination">
+    {% if page_obj.has_other_pages %}
+        {% with qs=request.GET|remove_page_param %}
+            <nav class="pagination__nav">
+                <ul class="pagination__list">
+                    {% if page_obj.has_previous %}
+                        <li><a href="?{% if qs %}{{ qs }}&{% endif %}page={{ page_obj.previous_page_number }}" class="pagination__link pagination__link--arrow">&lt;</a></li>
+                    {% endif %}
+                    {% for item in paginator.page_range %}
+                        {% if page_obj.number == item %}
+                            <li>
+                                <span class="pagination__link pagination__link--active">{{ item }}</span>
+                            </li>
+                        {% elif item >= page_obj.number|add:-2 and item <= page_obj.number|add:2 %}
+                            <li>
+                                <a href="?{% if qs %}{{ qs }}&{% endif %}page={{ item }}" class="pagination__link">{{ item }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li><a href="?{% if qs %}{{ qs }}&{% endif %}page={{ page_obj.next_page_number }}" class="pagination__link pagination__link--arrow">&gt;</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endwith %}
+    {% endif %}
+</div>
